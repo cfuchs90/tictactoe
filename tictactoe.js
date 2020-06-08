@@ -12,9 +12,34 @@ const Player = (name, symbol) => {
 const gameBoard = (function () {
   board = new Array(9);
 
-  const printBoard = () => console.table(board);
+  const printBoard = () => console.log(board);
 
   return {printBoard};
 })()
 
 
+const displayController = (function () {
+  const markerList = document.querySelectorAll(".player-mark");
+
+  const markBoard = function ()  {
+    markerList.forEach((item) => item.textContent = "X");
+  }
+
+  const setupBoard = function() {
+    markerList.forEach((item) => item.addEventListener("click", (e) => {
+      e.target.textContent = "O";
+      // Get index of current node list item
+      // e.target.
+    }));
+  }
+  
+  return {markBoard, setupBoard};
+})()
+
+const player1 = Player("christian", "X");
+const player2 = Player("uwe", "O");
+
+
+// displayController.markBoard();
+displayController.setupBoard();
+console.log(player1.getSymbol());
