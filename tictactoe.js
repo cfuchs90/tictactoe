@@ -20,10 +20,18 @@ const gameBoard = (function () {
 
 const displayController = (function () {
   const markerList = document.querySelectorAll(".player-mark");
+  const playerSpanElements = document.querySelectorAll("span");
 
-  const markBoard = function ()  {
-    markerList.forEach((item) => item.textContent = "X");
+  const clear = function ()  {
+    markerList.forEach((item) => item.textContent = " ");
   }
+
+
+  const printPlayerNames = function() {
+    playerSpanElements[0].textContent = player1.getName()
+    playerSpanElements[1].textContent = player2.getName()
+  }
+
 
   const setupBoard = function() {
     markerList.forEach((item) => item.addEventListener("click", (e) => {
@@ -33,13 +41,16 @@ const displayController = (function () {
     }));
   }
   
-  return {markBoard, setupBoard};
+  return {setupBoard, printPlayerNames, clear};
 })()
 
+const clearButton = document.querySelector("#clear");
 const player1 = Player("christian", "X");
-const player2 = Player("uwe", "O");
-
+const player2 = Player("max", "O");
 
 // displayController.markBoard();
+displayController.printPlayerNames();
 displayController.setupBoard();
 console.log(player1.getSymbol());
+
+clearButton.addEventListener("click", () => displayController.clear());
