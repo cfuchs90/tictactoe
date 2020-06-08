@@ -29,30 +29,30 @@ html * {
   text-align: center;
 }
 
-/* .vertical-line {
-   height: 200px;
-   border-left: 3px solid black;
-   }
+.vertical-line {
+  height: 200px;
+  border-left: 3px solid black;
+}
 
-   .vertical-line2 {
-   height: 200px;
-   border-left: 3px solid black;
-   position: absolute;
-   top: 100px;
-   left: 200px;
-   }
+.vertical-line2 {
+  height: 200px;
+  border-left: 3px solid black;
+  position: absolute;
+  top: 100px;
+  left: 200px;
+}
 
-   .horizontal-line {
-   width: 200px;
-   border-top: 3px solid black;
-   position: absolute;
-   top: 200px;
-   }
+.horizontal-line {
+  width: 200px;
+  border-top: 3px solid black;
+  position: absolute;
+  top: 200px;
+}
 
 
-   .horizontal-line2 {
-   width: 200px;
-   border-top: 3px solid black;
-   position: absolute;
-   top: 400px;
-   } */
+.horizontal-line2 {
+  width: 200px;
+  border-top: 3px solid black;
+  position: absolute;
+  top: 400px;
+}
