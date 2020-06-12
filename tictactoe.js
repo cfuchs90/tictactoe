@@ -1,20 +1,22 @@
-const Player = (name, symbol) => {
+const Player = function(name, symbol) {
   let playerName = name;
   let playerSymbol = symbol;
+  let score = 0;
 
   const getName = () => playerName;
   const getSymbol = () => playerSymbol;
   const setSymbol = (newSymbol) => playerSymbol = newSymbol;
+  const getScore = () => score;
+  const incScore = () => score += 1;
 
-  return {getName, getSymbol, setSymbol};
+  return {getName, getSymbol, setSymbol, getScore, incScore};
 }
+
 
 const gameBoard = (function () {
   board = new Array(9);
-
   const printBoard = () => console.log(board);
-
-  return {printBoard};
+  return {printBoard, board};
 })()
 
 
@@ -34,19 +36,34 @@ const displayController = (function () {
 
 
   const setupBoard = function() {
+    /* TODO set playerSymbol as textContent */
     markerList.forEach((item) => item.addEventListener("click", (e) => {
       e.target.textContent = "O";
-      // Get index of current node list item
-      // e.target.
     }));
   }
+
+  const getBoard = function() {
+    let boardArray = [];
+    markerList.forEach(item => boardArray.push(item.textContent));
+    return boardArray;
+  }
   
-  return {setupBoard, printPlayerNames, clear};
+  return {setupBoard, printPlayerNames, clear, getBoard};
 })()
+
+
+const Game = function (p1, p2) {
+  const sayPlayer = () => console.log(player1.getName());
+  
+  return {sayPlayer};
+}
+
 
 const clearButton = document.querySelector("#clear");
 const player1 = Player("christian", "X");
 const player2 = Player("max", "O");
+let game = Game(player1, player2);
+gameBoard.board = displayController.getBoard();
 
 // displayController.markBoard();
 displayController.printPlayerNames();
