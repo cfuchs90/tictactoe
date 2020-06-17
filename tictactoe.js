@@ -1,73 +1,91 @@
-const Player = function(name, symbol) {
-  let playerName = name;
-  let playerSymbol = symbol;
-  let score = 0;
+const Player = function(playerName, playerSymbol) {
+  const name = playerName;
+  const symbol = playerSymbol;
 
-  const getName = () => playerName;
-  const getSymbol = () => playerSymbol;
-  const setSymbol = (newSymbol) => playerSymbol = newSymbol;
-  const getScore = () => score;
-  const incScore = () => score += 1;
+  const getName = () => name;
+  const getSymbol = () => symbol;
 
-  return {getName, getSymbol, setSymbol, getScore, incScore};
+  return {getName, getSymbol};
 }
 
 
-const gameBoard = (function () {
-  board = new Array(9);
-  const printBoard = () => console.log(board);
-  return {printBoard, board};
+const Board = (function() {
+  let field = new Array(9);
+  field = ["", "", "", "", "", "", "", "", ""];
+
+  const print = () => console.log(field);
+
+  const clear = () => field = field.map(item => item = "");
+
+  return {field, print, clear};
 })()
 
 
-const displayController = (function () {
-  const markerList = document.querySelectorAll(".player-mark");
-  const playerSpanElements = document.querySelectorAll("span");
+const Display = (function() {
+  const grid = document.querySelectorAll('.player-mark')
 
-  const clear = function ()  {
-    markerList.forEach((item) => item.textContent = " ");
+  const updateBoard = function() {
+    let gridArray = Array.from(grid, x => x.textContent);
+
+    for(let i = 0; i <= gridArray.length; i++)  {
+      Board.field[i] = gridArray[i];
+    }
+  }
+
+  const clear = function() {
+    grid.forEach((item) => {
+      item.textContent = "";
+    });
+    Board.clear();
   }
 
 
-  const printPlayerNames = function() {
-    playerSpanElements[0].textContent = player1.getName()
-    playerSpanElements[1].textContent = player2.getName()
-  }
-
-
-  const setupBoard = function() {
-    /* TODO set playerSymbol as textContent */
-    markerList.forEach((item) => item.addEventListener("click", (e) => {
-      e.target.textContent = "O";
+  const getInput = function(player) {
+    grid.forEach(item => item.addEventListener("click", function getPlayerSelection(e)  {
+      e.target.textContent = player.getSymbol();
+      updateBoard();
+      // this.removeEventListener("click", getPlayerSelection);
     }));
+
   }
 
-  const getBoard = function() {
-    let boardArray = [];
-    markerList.forEach(item => boardArray.push(item.textContent));
-    return boardArray;
+  const releaseGrid = function(player) {
+    grid.forEach(item => item.removeEventListener("click", getPlayerSelection));
   }
   
-  return {setupBoard, printPlayerNames, clear, getBoard};
+  return {grid, updateBoard, clear, getInput, releaseGrid};
 })()
 
 
-const Game = function (p1, p2) {
-  const sayPlayer = () => console.log(player1.getName());
-  
-  return {sayPlayer};
-}
 
+const clearButton = document.querySelector('#clear');
 
-const clearButton = document.querySelector("#clear");
 const player1 = Player("christian", "X");
-const player2 = Player("max", "O");
-let game = Game(player1, player2);
-gameBoard.board = displayController.getBoard();
+const player2 = Player("christian", "O");
+let currentPlayer = player1
 
-// displayController.markBoard();
-displayController.printPlayerNames();
-displayController.setupBoard();
-console.log(player1.getSymbol());
+clearButton.addEventListener("click", () => Display.clear());
 
-clearButton.addEventListener("click", () => displayController.clear());
+
+// if(currentPlayer == player1) {
+//   Display.getInput(currentPlayer);
+//   currentPlayer = player2;
+// } else {
+//   Display.getInput(currentPlayer);
+//   currentPlayer = player1;
+// }
+
+Display.getInput(player1);
+		// Display.releaseGrid(player1);
+
+
+let counter = 0;
+
+// while(counter <= 9) {
+//   Display.getInput(player1);
+//   Display.updateBoard();
+//   Display.releaseGrid();
+//   Display.getInput(player2);
+//   Display.updateBoard();
+//   counter++;
+// }

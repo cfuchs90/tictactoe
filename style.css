@@ -14,7 +14,7 @@ html * {
   width: 400px;
   margin: 2em;
   padding: 0;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
@@ -22,7 +22,7 @@ html * {
 
 .player-mark {
   margin-bottom: 0;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   height: 130px;
   width: 130px;
   font-size: 120px;
@@ -30,29 +30,31 @@ html * {
 }
 
 .vertical-line {
-  height: 200px;
+  height: 400px;
   border-left: 3px solid black;
+  position: absolute;
+  left: 228px;
 }
 
 .vertical-line2 {
-  height: 200px;
+  height: 400px;
   border-left: 3px solid black;
   position: absolute;
-  top: 100px;
-  left: 200px;
+  top: 136px;
+  left: 361px;
 }
 
 .horizontal-line {
-  width: 200px;
+  width: 400px;
   border-top: 3px solid black;
   position: absolute;
-  top: 200px;
+  top: 267px;
 }
 
 
 .horizontal-line2 {
-  width: 200px;
+  width: 400px;
   border-top: 3px solid black;
   position: absolute;
-  top: 400px;
+  top: 402px;
 }
