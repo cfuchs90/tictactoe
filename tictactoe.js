@@ -5,7 +5,12 @@ const Player = function(playerName, playerSymbol) {
   const getName = () => name;
   const getSymbol = () => symbol;
 
-  return {getName, getSymbol};
+  const markField = function(e) {
+    e.target.textContent = player.getSymbol();
+    Display.updateBoard();
+  }
+
+  return {getName, getSymbol, markField};
 }
 
 
@@ -41,11 +46,14 @@ const Display = (function() {
 
 
   const getInput = function(player) {
-    grid.forEach(item => item.addEventListener("click", function getPlayerSelection(e)  {
-      e.target.textContent = player.getSymbol();
-      updateBoard();
-      // this.removeEventListener("click", getPlayerSelection);
-    }));
+    grid.forEach(item => item.addEventListener("click", player.markField(e)));
+    // grid.forEach(item => item.addEventListener("click", alert("hello")));
+    // grid.forEach(item => item.addEventListener("click", function getPlayerSelection(e)  {
+    //   e.target.textContent = player.getSymbol();
+    //   updateBoard();
+    //   // this.removeEventListener("click", getPlayerSelection);
+    // }));
+
 
   }
 
