@@ -44,9 +44,16 @@ const Display = (function() {
     Board.clear();
   }
 
+  const select = function(event, player) {
+    // event.target.textContent = "X";
+    event.target.textContent = player.getSymbol();
+  }
 
-  const getInput = function(player) {
-    grid.forEach(item => item.addEventListener("click", player.markField(e)));
+  const getSelectionP1 = (event) => select(event, player1);
+
+
+  const getInput = function(player, selectionFunction) {
+    grid.forEach(item => item.addEventListener("click", selectionFunction));
     // grid.forEach(item => item.addEventListener("click", alert("hello")));
     // grid.forEach(item => item.addEventListener("click", function getPlayerSelection(e)  {
     //   e.target.textContent = player.getSymbol();
@@ -57,11 +64,11 @@ const Display = (function() {
 
   }
 
-  const releaseGrid = function(player) {
-    grid.forEach(item => item.removeEventListener("click", getPlayerSelection));
+  const releaseGrid = function(func) {
+    grid.forEach(item => item.removeEventListener("click", func));
   }
   
-  return {grid, updateBoard, clear, getInput, releaseGrid};
+  return {grid, updateBoard, clear, getInput, releaseGrid, getSelectionP1};
 })()
 
 
