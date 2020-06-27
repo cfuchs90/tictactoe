@@ -5,9 +5,8 @@ const Player = function(playerName, playerSymbol) {
   const getName = () => name;
   const getSymbol = () => symbol;
 
-  const markField = function(e) {
-    e.target.textContent = player.getSymbol();
-    Display.updateBoard();
+  const markField = function(event) {
+    event.target.textContent = this.getSymbol();
   }
 
   return {getName, getSymbol, markField};
@@ -37,6 +36,28 @@ const Display = (function() {
     }
   }
 
+  // const selection = function(event, player) {
+  //   // event.target.textContent = "X";
+  //   console.log(this);
+  //   event.target.textContent = player.getSymbol();
+  //   // this.textContent = player1.getSymbol();
+  //   updateBoard();
+  //   grid.forEach(item => item.removeEventListener("click", selection.bind(player)));
+  // }
+
+
+  const getSelection = function(player) {
+
+    const select = function(event) {
+      event.target.textContent = player.getSymbol();
+      grid.forEach(item => item.removeEventListener("click", select));
+    }
+
+    grid.forEach(item => item.addEventListener("click", select));
+    updateBoard();
+
+  }  
+
   const clear = function() {
     grid.forEach((item) => {
       item.textContent = "";
@@ -44,31 +65,8 @@ const Display = (function() {
     Board.clear();
   }
 
-  const select = function(event, player) {
-    // event.target.textContent = "X";
-    event.target.textContent = player.getSymbol();
-  }
-
-  const getSelectionP1 = (event) => select(event, player1);
-
-
-  const getInput = function(player, selectionFunction) {
-    grid.forEach(item => item.addEventListener("click", selectionFunction));
-    // grid.forEach(item => item.addEventListener("click", alert("hello")));
-    // grid.forEach(item => item.addEventListener("click", function getPlayerSelection(e)  {
-    //   e.target.textContent = player.getSymbol();
-    //   updateBoard();
-    //   // this.removeEventListener("click", getPlayerSelection);
-    // }));
-
-
-  }
-
-  const releaseGrid = function(func) {
-    grid.forEach(item => item.removeEventListener("click", func));
-  }
   
-  return {grid, updateBoard, clear, getInput, releaseGrid, getSelectionP1};
+  return {getSelection, clear, updateBoard};
 })()
 
 
@@ -90,7 +88,6 @@ clearButton.addEventListener("click", () => Display.clear());
 //   currentPlayer = player1;
 // }
 
-Display.getInput(player1);
 		// Display.releaseGrid(player1);
 
 
