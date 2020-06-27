@@ -13,7 +13,6 @@ const Board = (function() {
   let field = new Array(9);
   field = ["", "", "", "", "", "", "", "", ""];
 
-  const print = () => console.log(field);
   const update = () => field = Display.getBoard();
 
   return {field, print, update};
@@ -42,12 +41,11 @@ const Display = (function() {
     const select = function(event) {
       event.target.textContent = player.getSymbol();
       grid.forEach(item => item.removeEventListener("click", select));
-      // updateBoard();
+      Board.update();
     }
 
     grid.forEach(item => item.addEventListener("click", select));
   }  
-
 
   // const clear = function() {
   //   grid.forEach((item) => {
@@ -55,7 +53,6 @@ const Display = (function() {
   //   });
   //   Board.clear();
   // }
-
   
   return {grid, getSelection, getBoard};
 })()
