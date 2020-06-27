@@ -19,9 +19,10 @@ const Board = (function() {
 
   const print = () => console.log(field);
 
-  const clear = () => field = field.map(item => item = "");
+  // const clear = () => field = field.map(item => item = "");
 
-  return {field, print, clear};
+  // return {field, print, clear};
+  return {field, print};
 })()
 
 
@@ -36,37 +37,38 @@ const Display = (function() {
     }
   }
 
-  // const selection = function(event, player) {
-  //   // event.target.textContent = "X";
-  //   console.log(this);
-  //   event.target.textContent = player.getSymbol();
-  //   // this.textContent = player1.getSymbol();
-  //   updateBoard();
-  //   grid.forEach(item => item.removeEventListener("click", selection.bind(player)));
-  // }
-
 
   const getSelection = function(player) {
+    /* the outer function provides the player variable to the inner "select" function.
+       The select function in turn marks the specified square with the players symbol,
+       and removes the event listeners from the grid.
+       The select function will then get passed on to the addEventListener function as 
+       a callback */
 
     const select = function(event) {
-      event.target.textContent = player.getSymbol();
+      if(event.target.textContent === "") {
+	event.target.textContent = player.getSymbol();
+      } else {
+	// TODO: keep player in loop until correct choice was made, give better errors
+	alert("Heeeeell No!");
+      }
       grid.forEach(item => item.removeEventListener("click", select));
+      updateBoard();
     }
 
     grid.forEach(item => item.addEventListener("click", select));
-    updateBoard();
-
   }  
 
-  const clear = function() {
-    grid.forEach((item) => {
-      item.textContent = "";
-    });
-    Board.clear();
-  }
+
+  // const clear = function() {
+  //   grid.forEach((item) => {
+  //     item.textContent = "";
+  //   });
+  //   Board.clear();
+  // }
 
   
-  return {getSelection, clear, updateBoard};
+  return {grid, getSelection, updateBoard};
 })()
 
 
@@ -77,7 +79,7 @@ const player1 = Player("christian", "X");
 const player2 = Player("christian", "O");
 let currentPlayer = player1
 
-clearButton.addEventListener("click", () => Display.clear());
+// clearButton.addEventListener("click", () => Display.clear());
 
 
 // if(currentPlayer == player1) {
