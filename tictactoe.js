@@ -31,25 +31,8 @@ const Display = (function() {
     Board.field = [...gridArray];
   }
 
-    /* the outer function provides the player variable to the inner "select" function.
-       The select function in turn marks the specified square with the players symbol,
-       and removes the event listeners from the grid.
-       The select function will then get passed on to the addEventListener function as 
-       a callback */
 
-  const getSelection = function(player) {
-
-    const select = function(event) {
-    event.target.textContent = player.symbol;
-    grid.forEach(item => item.removeEventListener("click", select));
-    Board.update();
-    }
-
-    grid.forEach(item => item.addEventListener("click", select));
-  }  
-
-
-  const round = function() {
+  const _turn = function() {
     if(currentPlayer == player1) {
       event.target.textContent = player1.symbol;
       currentPlayer = player2;
@@ -59,9 +42,9 @@ const Display = (function() {
     }
   }
     
-  const bla = () => {
-    grid.forEach(element => element.removeEventListener("click", round));
-    grid.forEach(element => element.addEventListener("click", round));
+  const round = () => {
+    grid.forEach(element => element.removeEventListener("click", _turn));
+    grid.forEach(element => element.addEventListener("click", _turn));
   }
 
 
