@@ -1,11 +1,10 @@
-const Player = function(playerName, playerSymbol) {
+const Player = function(playerName, playerSymbol, playerTurn) {
   const name = playerName;
   const symbol = playerSymbol;
+  const turn = playerTurn;
 
-  const getName = () => name;
-  const getSymbol = () => symbol;
 
-  return {getName, getSymbol};
+  return {name, symbol, turn};
 }
 
 
@@ -21,31 +20,50 @@ const Board = (function() {
 
 const Display = (function() {
   const grid = document.querySelectorAll('.player-mark')
+  const player1 = Player("christian", "X", true);
+  const player2 = Player("heinz", "O", false);
+
+  let currentPlayer = player1;
 
   const getBoard = function() {
     let gridArray = Array.from(grid, x => x.textContent);
 
-    for(let i = 0; i <= gridArray.length; i++)  {
-      Board.field[i] = gridArray[i];
-    }
+    Board.field = [...gridArray];
   }
 
-
-  const getSelection = function(player) {
     /* the outer function provides the player variable to the inner "select" function.
        The select function in turn marks the specified square with the players symbol,
        and removes the event listeners from the grid.
        The select function will then get passed on to the addEventListener function as 
        a callback */
 
+  const getSelection = function(player) {
+
     const select = function(event) {
-      event.target.textContent = player.getSymbol();
-      grid.forEach(item => item.removeEventListener("click", select));
-      Board.update();
+    event.target.textContent = player.symbol;
+    grid.forEach(item => item.removeEventListener("click", select));
+    Board.update();
     }
 
     grid.forEach(item => item.addEventListener("click", select));
   }  
+
+
+  const round = function() {
+    if(currentPlayer == player1) {
+      event.target.textContent = player1.symbol;
+      currentPlayer = player2;
+    } else {
+      event.target.textContent = player2.symbol;
+      currentPlayer = player1;
+    }
+  }
+    
+  const bla = () => {
+    grid.forEach(element => element.removeEventListener("click", round));
+    grid.forEach(element => element.addEventListener("click", round));
+  }
+
 
   // const clear = function() {
   //   grid.forEach((item) => {
@@ -54,17 +72,14 @@ const Display = (function() {
   //   Board.clear();
   // }
   
-  return {grid, getSelection, getBoard};
+  return { grid, getSelection, getBoard, bla};
 })()
 
 
+// const player1 = Player("christian", "X", true);
+// const player2 = Player("heinz", "O", false);
 
 // const clearButton = document.querySelector('#clear');
 
-const player1 = Player("christian", "X");
-const player2 = Player("christian", "O");
-let currentPlayer = player1
+Display.bla()
 
-// clearButton.addEventListener("click", () => Display.clear());
-
-Display.getSelection(player1);
