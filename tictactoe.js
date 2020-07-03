@@ -3,7 +3,6 @@ const Player = function(playerName, playerSymbol, playerTurn) {
   const symbol = playerSymbol;
   const turn = playerTurn;
 
-
   return {name, symbol, turn};
 }
 
@@ -12,9 +11,9 @@ const Board = (function() {
   let field = new Array(9);
   field = ["", "", "", "", "", "", "", "", ""];
 
-  const update = () => field = Display.getBoard();
+  // const update = () => field = Display.getBoard();
 
-  return {field, print, update};
+  return {field, print};
 })()
 
 
@@ -34,17 +33,24 @@ const Display = (function() {
 
   const _turn = function() {
     if(currentPlayer == player1) {
-      event.target.textContent = player1.symbol;
-      currentPlayer = player2;
+      if(event.target.textContent !== player2.symbol) {
+	event.target.textContent = player1.symbol;
+	currentPlayer = player2;
+      }
     } else {
+      if(event.target.textContent !== player1.symbol) {
       event.target.textContent = player2.symbol;
       currentPlayer = player1;
+      }
     }
+    getBoard();
   }
     
   const round = () => {
     grid.forEach(element => element.removeEventListener("click", _turn));
     grid.forEach(element => element.addEventListener("click", _turn));
+    // possibleFields.forEach(element => element.removeEventListener("click", _turn));
+    // possibleFields.forEach(element => element.addEventListener("click", _turn));
   }
 
 
@@ -55,14 +61,10 @@ const Display = (function() {
   //   Board.clear();
   // }
   
-  return { grid, getSelection, getBoard, bla};
+  return { grid, getBoard, round};
 })()
 
 
-// const player1 = Player("christian", "X", true);
-// const player2 = Player("heinz", "O", false);
 
-// const clearButton = document.querySelector('#clear');
-
-Display.bla()
+Display.round()
 
