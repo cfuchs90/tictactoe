@@ -30,21 +30,6 @@ const Display = (function() {
     Board.field = [...gridArray];
   }
 
-
-  const _turn = function() {
-    if(currentPlayer == player1) {
-      if(event.target.textContent !== player2.symbol) {
-	event.target.textContent = player1.symbol;
-	currentPlayer = player2;
-      }
-    } else {
-      if(event.target.textContent !== player1.symbol) {
-      event.target.textContent = player2.symbol;
-      currentPlayer = player1;
-      }
-    }
-    getBoard();
-  }
     
   const round = (func) => {
     grid.forEach(element => element.removeEventListener("click", func));
