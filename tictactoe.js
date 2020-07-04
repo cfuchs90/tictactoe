@@ -1,9 +1,9 @@
-const Player = function(playerName, playerSymbol, playerTurn) {
+const Player = function(playerName, playerSymbol) {
   const name = playerName;
   const symbol = playerSymbol;
-  const turn = playerTurn;
+  
 
-  return {name, symbol, turn};
+  return {name, symbol};
 }
 
 
@@ -13,7 +13,7 @@ const Board = (function() {
 
   // const update = () => field = Display.getBoard();
 
-  return {field, print};
+  return {field};
 })()
 
 
@@ -46,14 +46,12 @@ const Display = (function() {
     getBoard();
   }
     
-  const round = () => {
-    grid.forEach(element => element.removeEventListener("click", _turn));
-    grid.forEach(element => element.addEventListener("click", _turn));
-    // possibleFields.forEach(element => element.removeEventListener("click", _turn));
-    // possibleFields.forEach(element => element.addEventListener("click", _turn));
+  const round = (func) => {
+    grid.forEach(element => element.removeEventListener("click", func));
+    grid.forEach(element => element.addEventListener("click", func));
   }
 
-
+  
   // const clear = function() {
   //   grid.forEach((item) => {
   //     item.textContent = "";
@@ -65,6 +63,36 @@ const Display = (function() {
 })()
 
 
+const Game = function(player1, player2) {
+  currentPlayer = player1;
+  
+  const turn = function() {
+      if(currentPlayer == player1) {
+	if(event.target.textContent !== player2.symbol) {
+		event.target.textContent = player1.symbol;
+		currentPlayer = player2;
+	}
+      } else {
+	 if(event.target.textContent !== player1.symbol) {
+	   event.target.textContent = player2.symbol;
+	   currentPlayer = player1;
+	}
+      }
+      Display.getBoard();
+  }
 
-Display.round()
+  const over = function() {
+  }
+
+  return {turn}
+}
+
+
+const player1 = Player("christian", "X")
+const player2 = Player("alex", "O")
+let currentGame = Game(player1, player2);
+
+
+
+Display.round(currentGame.turn)
 
