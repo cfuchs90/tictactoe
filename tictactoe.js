@@ -11,17 +11,9 @@ const Board = (function() {
   let field = new Array(9);
   field = ["", "", "", "", "", "", "", "", ""];
 
-  const winningConfigs = [ [field[0] == field[1] && field[1] == field[2]],
-			   [field[3] == field[4] && field[4] == field[5]],
-			   [field[6] == field[7] && field[7] == field[8]],
-			   [field[0] == field[3] && field[3] == field[6]],
-			   [field[0] == field[4] && field[4] == field[8]],
-			   [field[1] == field[4] && field[4] == field[7]],
-			   [field[2] == field[5] && field[5] == field[8]]];
-
   // const update = () => field = Display.getBoard();
 
-  return {field, winningConfigs};
+  return {field};
 })()
 
 
@@ -64,14 +56,14 @@ const Game = function(player1, player2) {
 	if(event.target.textContent !== player2.symbol) {
 		event.target.textContent = player1.symbol;
 		Display.getBoard();
-		over();
+		win();
 		currentPlayer = player2;
 	}
       } else {
 	 if(event.target.textContent !== player1.symbol) {
 	   event.target.textContent = player2.symbol;
 	    Display.getBoard();
-	    over();
+	    win();
 	   currentPlayer = player1;
 	}
       }
@@ -79,13 +71,47 @@ const Game = function(player1, player2) {
       // over();
   }
 
-  const over = function() {
-    if(Board.field.slice(0,3).every(elem => elem == currentPlayer.symbol)) {
-      alert(`${currentPlayer.name} wins!`);
-  }
+  const win = function() {
+    // const winningConfigs = [ [field[0] , field[1], field[2]],
+    // 			   [field[3] , field[4], field[5]],
+    // 			   [field[6] , field[7], field[8]],
+    // 			   [field[0] , field[3], field[6]],
+    // 			   [field[0] , field[4], field[8]],
+    // 			   [field[1] , field[4], field[7]],
+    // 			   [field[2] , field[5], field[8]]];
+
+  
+    if([Board.field[0], Board.field[1], Board.field[2]].every(elem => elem == currentPlayer.symbol)) {
+      alert("Yeeeehaa");
+    } else if([Board.field[0], Board.field[3], Board.field[6]].every(elem => elem == currentPlayer.symbol)) {
+      alert("Yabadabadu");
+    } else if([Board.field[1], Board.field[4], Board.field[7]].every(elem => elem == currentPlayer.symbol)) {
+      alert("Another one!")
+    } else if([Board.field[2], Board.field[5], Board.field[8]].every(elem => elem == currentPlayer.symbol)) {
+      alert("Another two!")
+    } else if([Board.field[0], Board.field[1], Board.field[2]].every(elem => elem == currentPlayer.symbol)) {
+      alert("Another two!")
+    } else if([Board.field[3], Board.field[4], Board.field[5]].every(elem => elem == currentPlayer.symbol)) {
+      alert("Another two!")
+    } else if([Board.field[6], Board.field[7], Board.field[8]].every(elem => elem == currentPlayer.symbol)) {
+      alert("Another two!")
+    } else if([Board.field[0], Board.field[4], Board.field[8]].every(elem => elem == currentPlayer.symbol)) {
+      alert("Another two!")
+    } 
   }
 
-  return {turn}
+  // const over = function() {
+  //   if(Board.field.slice(0,3).every(elem => elem == currentPlayer.symbol)) {
+  //     alert(`${currentPlayer.name} wins!`);
+  // }
+
+  const over = function() {
+    if(Board.field[0] == currentPlayer.symbol && Board.winningConfigs[0]) {
+      alert(`Player ${currentPlayer.name} won!`);
+    }
+  }
+
+  return {turn, win}
 }
 
 
