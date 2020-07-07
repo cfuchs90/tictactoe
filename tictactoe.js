@@ -2,7 +2,6 @@ const Player = function(playerName, playerSymbol) {
   const name = playerName;
   const symbol = playerSymbol;
   
-
   return {name, symbol};
 }
 
@@ -10,9 +9,7 @@ const Player = function(playerName, playerSymbol) {
 const Board = (function() {
   let field = new Array(9);
   field = ["", "", "", "", "", "", "", "", ""];
-
-  // const update = () => field = Display.getBoard();
-
+  
   return {field};
 })()
 
@@ -35,7 +32,6 @@ const Display = (function() {
     grid.forEach(element => element.removeEventListener("click", func));
     grid.forEach(element => element.addEventListener("click", func));
   }
-
   
   // const clear = function() {
   //   grid.forEach((item) => {
@@ -67,22 +63,12 @@ const Game = function(player1, player2) {
 	   currentPlayer = player1;
 	}
       }
-      // Display.getBoard();
-      // over();
   }
 
   const win = function() {
-    // const winningConfigs = [ [field[0] , field[1], field[2]],
-    // 			   [field[3] , field[4], field[5]],
-    // 			   [field[6] , field[7], field[8]],
-    // 			   [field[0] , field[3], field[6]],
-    // 			   [field[0] , field[4], field[8]],
-    // 			   [field[1] , field[4], field[7]],
-    // 			   [field[2] , field[5], field[8]]];
-
-  
     if([Board.field[0], Board.field[1], Board.field[2]].every(elem => elem == currentPlayer.symbol)) {
       alert("Yeeeehaa");
+      [Display.grid[0], Display.grid[1], Display.grid[2]].forEach(item => item.style.color = "green");
     } else if([Board.field[0], Board.field[3], Board.field[6]].every(elem => elem == currentPlayer.symbol)) {
       alert("Yabadabadu");
     } else if([Board.field[1], Board.field[4], Board.field[7]].every(elem => elem == currentPlayer.symbol)) {
@@ -100,18 +86,8 @@ const Game = function(player1, player2) {
     } 
   }
 
-  // const over = function() {
-  //   if(Board.field.slice(0,3).every(elem => elem == currentPlayer.symbol)) {
-  //     alert(`${currentPlayer.name} wins!`);
-  // }
-
-  const over = function() {
-    if(Board.field[0] == currentPlayer.symbol && Board.winningConfigs[0]) {
-      alert(`Player ${currentPlayer.name} won!`);
-    }
-  }
-
-  return {turn, win}
+  
+  return {turn}
 }
 
 
