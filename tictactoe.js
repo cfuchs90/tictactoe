@@ -9,8 +9,12 @@ const Player = function(playerName, playerSymbol) {
 const Board = (function() {
   let field = new Array(9);
   field = ["", "", "", "", "", "", "", "", ""];
+
+  function clear() {
+    this.field = field.map(x => x = "")
+  }
   
-  return {field};
+  return {field, clear};
 })()
 
 
@@ -33,19 +37,21 @@ const Display = (function() {
     grid.forEach(element => element.addEventListener("click", func));
   }
   
-  // const clear = function() {
-  //   grid.forEach((item) => {
-  //     item.textContent = "";
-  //   });
-  //   Board.clear();
-  // }
-  
-  return { grid, getBoard, round};
+  const clear = function() {
+    grid.forEach((item) => {
+      item.textContent = "";
+    });
+    Board.clear();
+  }
+
+    
+  return { grid, getBoard, round, clear};
 })()
 
 
 const Game = function(player1, player2) {
   currentPlayer = player1;
+  let winner;
   
   const turn = function() {
       if(currentPlayer == player1) {
@@ -67,22 +73,50 @@ const Game = function(player1, player2) {
 
   const win = function() {
     if([Board.field[0], Board.field[1], Board.field[2]].every(elem => elem == currentPlayer.symbol)) {
-      alert("Yeeeehaa");
-      [Display.grid[0], Display.grid[1], Display.grid[2]].forEach(item => item.style.color = "green");
+      [Display.grid[0], Display.grid[1], Display.grid[2]].forEach(item => item.style.color = "red");
+      Display.grid.forEach(item => item.removeEventListener("click", turn));
+      return currentPlayer.name;
+      
     } else if([Board.field[0], Board.field[3], Board.field[6]].every(elem => elem == currentPlayer.symbol)) {
-      alert("Yabadabadu");
+      [Display.grid[0], Display.grid[3], Display.grid[6]].forEach(item => item.style.color = "red");
+      Display.grid.forEach(item => item.removeEventListener("click", turn));
+      return currentPlayer.name;
+      
     } else if([Board.field[1], Board.field[4], Board.field[7]].every(elem => elem == currentPlayer.symbol)) {
-      alert("Another one!")
+      [Display.grid[1], Display.grid[4], Display.grid[7]].forEach(item => item.style.color = "red");
+      Display.grid.forEach(item => item.removeEventListener("click", turn));
+      return currentPlayer.name;
+      
     } else if([Board.field[2], Board.field[5], Board.field[8]].every(elem => elem == currentPlayer.symbol)) {
-      alert("Another two!")
+      [Display.grid[2], Display.grid[5], Display.grid[8]].forEach(item => item.style.color = "red");
+      Display.grid.forEach(item => item.removeEventListener("click", turn));
+      return currentPlayer.name;
+      
+    } else if([Board.field[2], Board.field[4], Board.field[6]].every(elem => elem == currentPlayer.symbol)) {
+      [Display.grid[2], Display.grid[4], Display.grid[6]].forEach(item => item.style.color = "red");
+      Display.grid.forEach(item => item.removeEventListener("click", turn));
+      return currentPlayer.name;
+      
     } else if([Board.field[0], Board.field[1], Board.field[2]].every(elem => elem == currentPlayer.symbol)) {
-      alert("Another two!")
+      [Display.grid[0], Display.grid[1], Display.grid[2]].forEach(item => item.style.color = "red");
+      Display.grid.forEach(item => item.removeEventListener("click", turn));
+      return currentPlayer.name;
+      
     } else if([Board.field[3], Board.field[4], Board.field[5]].every(elem => elem == currentPlayer.symbol)) {
-      alert("Another two!")
+      [Display.grid[3], Display.grid[4], Display.grid[5]].forEach(item => item.style.color = "red");
+      Display.grid.forEach(item => item.removeEventListener("click", turn));
+      return currentPlayer.name;
+      
     } else if([Board.field[6], Board.field[7], Board.field[8]].every(elem => elem == currentPlayer.symbol)) {
-      alert("Another two!")
+      [Display.grid[6], Display.grid[7], Display.grid[8]].forEach(item => item.style.color = "red");w
+      Display.grid.forEach(item => item.removeEventListener("click", turn));
+      return currentPlayer.name;
+      
     } else if([Board.field[0], Board.field[4], Board.field[8]].every(elem => elem == currentPlayer.symbol)) {
-      alert("Another two!")
+      [Display.grid[0], Display.grid[4], Display.grid[8]].forEach(item => item.style.color = "red");
+      Display.grid.forEach(item => item.removeEventListener("click", turn));
+      return currentPlayer.name;
+      
     } 
   }
 
